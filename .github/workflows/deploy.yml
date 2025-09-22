@@ -6,29 +6,40 @@ on:
       - main
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      # 1. Checkout repo
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # 2. Setup Node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
           node-version: 20
 
-      # Use install instead of ci (safer if lockfile missing or broken)
-      - run: npm install
-      - run: npm run build
+      # 3. Install deps and build
+      - name: Install dependencies
+        run: npm install
+      - name: Build Next.js app
+        run: npm run build
 
+      # 4. Upload build + needed files to AWS
       - name: Upload files to server
-        uses: appleboy/scp-action@v0.1.7
-        with:
-          host: ${{ secrets.AWS_HOST }}
-          username: ubuntu
-          key: ${{ secrets.AWS_KEY }}
-          source: ".next,package.json,package-lock.json,public"
-          target: "~/apps/nextjs-app"
+        uses: easingthemes/ssh-deploy@main
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.AWS_KEY }}
+          ARGS: "-avz --delete"
+          SOURCE: ".next package.json package-lock.json public next.config.js"
+          REMOTE_HOST: ${{ secrets.AWS_HOST }}
+          REMOTE_USER: ubuntu
+          TARGET: "~/apps/nextjs-app"
 
+      # 5. Restart app with PM2
       - name: Restart PM2
-        uses: appleboy/ssh-action@v1.2.0
+        uses: appleboy/ssh-action@v1.0.0
         with:
           host: ${{ secrets.AWS_HOST }}
           username: ubuntu
