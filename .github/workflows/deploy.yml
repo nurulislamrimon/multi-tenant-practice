@@ -17,7 +17,7 @@ jobs:
           username: ubuntu
           key: ${{ secrets.AWS_KEY }}
           script: |
-            cd ~/apps/nextjs-app || git clone https://github.com/your-username/your-repo.git ~/apps/nextjs-app
+            cd ~/apps/nextjs-app || git clone https://github.com/nurulislamrimon/multi-tenant-practice.git ~/apps/nextjs-app
             cd ~/apps/nextjs-app
             git fetch --all
             git reset --hard origin/main
