@@ -13,8 +13,11 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-      - run: npm ci
+
+      # Use install instead of ci (safer if lockfile missing or broken)
+      - run: npm install
       - run: npm run build
+
       - name: Upload files to server
         uses: appleboy/scp-action@v0.1.7
         with:
@@ -23,6 +26,7 @@ jobs:
           key: ${{ secrets.AWS_KEY }}
           source: ".next,package.json,package-lock.json,public"
           target: "~/apps/nextjs-app"
+
       - name: Restart PM2
         uses: appleboy/ssh-action@v1.2.0
         with:
