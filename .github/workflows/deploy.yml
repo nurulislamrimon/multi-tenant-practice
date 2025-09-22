@@ -10,20 +10,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-
-      - name: Install dependencies
-        run: npm install
-
-      - name: Build Next.js app
-        run: npm run build
-
       - name: Deploy to AWS
         uses: appleboy/ssh-action@v1.2.0
         with:
@@ -31,8 +17,10 @@ jobs:
           username: ubuntu
           key: ${{ secrets.AWS_KEY }}
           script: |
+            cd ~/apps/nextjs-app || git clone https://github.com/your-username/your-repo.git ~/apps/nextjs-app
             cd ~/apps/nextjs-app
-            git pull origin main
+            git fetch --all
+            git reset --hard origin/main
             npm install --omit=dev
             npm run build
             pm2 restart nextjs-app || pm2 start npm --name "nextjs-app" -- start
