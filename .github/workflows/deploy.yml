@@ -1,26 +1,28 @@
-name: Deploy Next.js App
-
-on:
-  push:
-    branches:
-      - main
-
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Deploy to AWS
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm ci
+      - run: npm run build
+      - name: Upload files to server
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.AWS_HOST }}
+          username: ubuntu
+          key: ${{ secrets.AWS_KEY }}
+          source: ".next,package.json,package-lock.json,public"
+          target: "~/apps/nextjs-app"
+      - name: Restart PM2
         uses: appleboy/ssh-action@v1.2.0
         with:
           host: ${{ secrets.AWS_HOST }}
           username: ubuntu
           key: ${{ secrets.AWS_KEY }}
           script: |
-            cd ~/apps/nextjs-app || git clone https://github.com/nurulislamrimon/multi-tenant-practice.git ~/apps/nextjs-app
             cd ~/apps/nextjs-app
-            git fetch --all
-            git reset --hard origin/main
             npm install --omit=dev
-            npm run build
             pm2 restart nextjs-app || pm2 start npm --name "nextjs-app" -- start
