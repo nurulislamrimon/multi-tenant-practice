@@ -3,8 +3,9 @@ import type { NextRequest } from "next/server";
 
 export function middleware(req: NextRequest) {
   const host = req.headers.get("host") || "";
-
-  if (host.endsWith(".dripnext.com")) {
+  const hostName = "dripnext.com";
+  // const hostName = "lvh.me:3000";
+  if (host.endsWith("." + hostName)) {
     const subdomain = host.split(".")[0];
     req.nextUrl.searchParams.set("tenant", subdomain);
   } else {
@@ -16,5 +17,5 @@ export function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: [],
+  matcher: ["/((?!api|_next/static|_next/image|favicon.ico).*)"],
 };
