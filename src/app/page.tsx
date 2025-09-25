@@ -23,6 +23,7 @@ export default async function Page() {
     <div>
       <h1>{data.name}</h1>
       <p>{data.description}</p>
+      <small>This is Automated CICD</small>
     </div>
   );
 }
