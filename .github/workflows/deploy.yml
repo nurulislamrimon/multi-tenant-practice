@@ -19,7 +19,6 @@ jobs:
         uses: easingthemes/ssh-deploy@main
         env:
           SSH_PRIVATE_KEY: ${{ secrets.AWS_KEY }}
-          ARGS: "-avz --delete"
           # Upload everything needed to build/run
           SOURCE: "./"
           ARGS: "-avz --delete --exclude=node_modules --exclude=.git"
