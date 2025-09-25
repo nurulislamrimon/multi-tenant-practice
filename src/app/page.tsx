@@ -1,20 +1,27 @@
 import { headers } from "next/headers";
-
-const tenantData: Record<string, { name: string; description: string }> = {
-  client1: {
-    name: "Client 1",
-    description: "This is dummy data for Client 1 - Ata ki",
-  },
-  client2: { name: "Client 2", description: "This is dummy data for Client 2" },
-  localhost: { name: "Local Dev", description: "Data for localhost" },
-};
+import { Tenant } from "../../interfaces/tenant.interface";
+import { tenantData } from "../../constants/tenant.constant";
 
 export default async function Page() {
   const header = await headers();
   const host = header.get("host") || "localhost";
-  const subdomain = host.split(":")[0].split(".")[0];
+  const domain = host.split(":")[0];
+  const subExist = domain.split(".").length > 2;
 
-  const data = tenantData[subdomain] || {
+  const getTheItem = (cond: (item: Tenant) => boolean): Tenant | undefined => {
+    return tenantData.find(cond);
+  };
+
+  let tenant: Tenant | undefined;
+
+  if (subExist) {
+    const subdomain = domain.split(".")[0];
+    tenant = getTheItem((item) => item.sub === subdomain);
+  } else {
+    tenant = getTheItem((item) => item.domain === domain);
+  }
+
+  const data = tenant?.data || {
     name: "Unknown",
     description: "No data found",
   };
