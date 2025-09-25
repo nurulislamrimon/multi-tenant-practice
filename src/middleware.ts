@@ -4,15 +4,20 @@ import type { NextRequest } from "next/server";
 export function middleware(req: NextRequest) {
   const host = req.headers.get("host") || "";
 
+  const mainDomain = "dripnext.com";
   // Specific custom domain mapping
-  if (host === "sub.arabcoupondaily.com") {
-    req.nextUrl.searchParams.set("tenant", "client1");
-    return NextResponse.rewrite(req.nextUrl);
+  const customDomain = "sub.arabcoupondaily.com";
+  // const customDomain = "lvh.me:3000";
+
+  if (host === customDomain) {
+    const url = new URL(req.url);
+    url.host = `client1.${mainDomain}`;
+
+    return NextResponse.redirect(url);
   }
 
-  const hostName = "dripnext.com";
   // const hostName = "lvh.me:3000";
-  if (host.endsWith("." + hostName)) {
+  if (host.endsWith("." + mainDomain)) {
     const subdomain = host.split(".")[0];
     req.nextUrl.searchParams.set("tenant", subdomain);
   } else {
