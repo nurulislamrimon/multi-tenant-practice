@@ -21,7 +21,8 @@ jobs:
           SSH_PRIVATE_KEY: ${{ secrets.AWS_KEY }}
           ARGS: "-avz --delete"
           # Upload everything needed to build/run
-          SOURCE: "src package.json package-lock.json public next.config.js"
+          SOURCE: "./"
+          ARGS: "-avz --delete --exclude=node_modules --exclude=.git"
           REMOTE_HOST: ${{ secrets.AWS_HOST }}
           REMOTE_USER: ubuntu
           TARGET: "~/apps/nextjs-app"
