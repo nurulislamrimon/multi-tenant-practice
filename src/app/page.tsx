@@ -9,7 +9,7 @@ const tenantData: Record<string, { name: string; description: string }> = {
   localhost: { name: "Local Dev", description: "Data for localhost" },
 };
 
-export default async function Page({ params }: any) {
+export default async function Page() {
   const header = await headers();
   const host = header.get("host") || "localhost";
   const subdomain = host.split(":")[0].split(".")[0];
