@@ -3,6 +3,13 @@ import type { NextRequest } from "next/server";
 
 export function middleware(req: NextRequest) {
   const host = req.headers.get("host") || "";
+
+  // Specific custom domain mapping
+  if (host === "sub.arabcoupondaily.com") {
+    req.nextUrl.searchParams.set("tenant", "client1");
+    return NextResponse.rewrite(req.nextUrl);
+  }
+
   const hostName = "dripnext.com";
   // const hostName = "lvh.me:3000";
   if (host.endsWith("." + hostName)) {
