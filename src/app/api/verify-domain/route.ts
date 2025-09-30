@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import crypto from "crypto";
 import fs from "fs/promises";
 import path from "path";
+import { IDomain } from "@/interfaces/domain.interface";
 
 const dataFile = path.join(process.cwd(), "domains.json");
 
@@ -40,7 +41,7 @@ export async function POST(req: NextRequest) {
     }
 
     // ✅ Read current file or init empty array
-    let domains: any[] = [];
+    let domains: IDomain[] = [];
     try {
       const file = await fs.readFile(dataFile, "utf-8");
       domains = JSON.parse(file);

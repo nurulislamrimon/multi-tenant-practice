@@ -1,18 +1,10 @@
 "use client";
 
+import { IDomain } from "@/interfaces/domain.interface";
 import { useState, useEffect } from "react";
 
-interface Domain {
-  domain: string;
-  cloudflareId: string;
-  status: string;
-  createdAt: string;
-  verificationToken?: string;
-  verificationRecordName?: string;
-}
-
 export default function DomainsPage() {
-  const [domains, setDomains] = useState<Domain[]>([]);
+  const [domains, setDomains] = useState<IDomain[]>([]);
 
   const fetchDomains = () => {
     fetch("/api/domains")
