@@ -7,7 +7,10 @@ export default function Contact() {
           <form className="mt-8">
             <div className="grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-8">
               <div>
-                <label htmlFor="first-name" className="block text-sm font-medium text-gray-700">
+                <label
+                  htmlFor="first-name"
+                  className="block text-sm font-medium text-gray-700"
+                >
                   First name
                 </label>
                 <div className="mt-1">
@@ -21,7 +24,10 @@ export default function Contact() {
                 </div>
               </div>
               <div>
-                <label htmlFor="last-name" className="block text-sm font-medium text-gray-700">
+                <label
+                  htmlFor="last-name"
+                  className="block text-sm font-medium text-gray-700"
+                >
                   Last name
                 </label>
                 <div className="mt-1">
@@ -35,7 +41,10 @@ export default function Contact() {
                 </div>
               </div>
               <div className="sm:col-span-2">
-                <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+                <label
+                  htmlFor="email"
+                  className="block text-sm font-medium text-gray-700"
+                >
                   Email
                 </label>
                 <div className="mt-1">
@@ -49,7 +58,10 @@ export default function Contact() {
                 </div>
               </div>
               <div className="sm:col-span-2">
-                <label htmlFor="message" className="block text-sm font-medium text-gray-700">
+                <label
+                  htmlFor="message"
+                  className="block text-sm font-medium text-gray-700"
+                >
                   Message
                 </label>
                 <div className="mt-1">
@@ -58,7 +70,7 @@ export default function Contact() {
                     name="message"
                     rows={4}
                     className="block w-full rounded-md border-gray-300 py-2 px-3 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-                    defaultValue={''}
+                    defaultValue={""}
                   />
                 </div>
               </div>
@@ -67,7 +79,7 @@ export default function Contact() {
                   type="submit"
                   className="inline-flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                 >
-                  Let's talk
+                  Let&apos;s talk
                 </button>
               </div>
             </div>
