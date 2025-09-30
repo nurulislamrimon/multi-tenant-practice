@@ -11,7 +11,6 @@ export async function POST(req: NextRequest) {
   if (!domain) {
     return new NextResponse("Domain is required", { status: 400 });
   }
-
   try {
     const res = await fetch(
       `https://api.cloudflare.com/client/v4/zones/${process.env.CF_ZONE_ID}/custom_hostnames`,
