@@ -26,14 +26,15 @@ export default function DomainsPage() {
   };
 
   const handleCheckVerification = async (domain: string) => {
-    await fetch("/api/check-verification", {
+    const res = await fetch("/api/check-verification", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ domain }),
     });
+    const data = await res.json();
+    console.log(data, "---------------------");
     fetchDomains();
   };
-
   return (
     <div className="container mx-auto px-4 py-8">
       <h1 className="text-3xl font-bold mb-4">Domains</h1>
@@ -60,7 +61,7 @@ export default function DomainsPage() {
                     <code>{domain.verificationRecordName}</code>
                   </pre>
                   <p className="text-white mt-2">And this value:</p>
-                  <pre className="bg-gray-900 text-white rounded-lg p-2 mt-2">
+                  <pre className="bg-gray-900 text-white rounded-lg p-2 mt-2 overflow-hidden w-full">
                     <code>{domain.verificationToken}</code>
                   </pre>
                 </div>
@@ -68,13 +69,13 @@ export default function DomainsPage() {
             </div>
             <div className="flex flex-row mt-4">
               <button
-                className="border rounded-xl p-2 mr-2"
+                className="border rounded-xl p-2 mr-2 cursor-pointer"
                 onClick={() => handleVerify(domain.domain)}
               >
                 {domain.verificationToken ? "Re-Verify" : "Verify"}
               </button>
               <button
-                className="border rounded-xl p-2"
+                className="border rounded-xl p-2 cursor-pointer"
                 onClick={() => handleCheckVerification(domain.domain)}
                 disabled={!domain.verificationToken}
               >
