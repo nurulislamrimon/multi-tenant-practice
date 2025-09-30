@@ -3,6 +3,8 @@
     "domain": "sub.arabcoupondaily.com",
     "cloudflareId": "3239df7e-1a85-414f-a778-aeb76e09f375",
     "status": "initializing",
-    "createdAt": "2025-09-30T10:02:13.233Z"
+    "createdAt": "2025-09-30T10:02:13.233Z",
+    "verificationToken": "07b41d1c5a0442858fd2bfb995b609f13f3732744dd9c8471430460ed768616a",
+    "verificationRecordName": "_gemini-verification.sub.arabcoupondaily.com"
   }
 ]
